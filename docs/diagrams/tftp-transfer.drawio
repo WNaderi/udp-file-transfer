@@ -1,0 +1,58 @@
+<mxfile host="app.diagrams.net" modified="2026-07-08T00:00:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="tftp-transfer-flow" name="TFTP Transfer Flow">
+    <mxGraphModel dx="1326" dy="798" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="clientFiles" value="client-files/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="80" y="90" width="150" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="client" value="tftp-client&#xa;RRQ / WRQ CLI" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="310" y="90" width="160" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="udp" value="UDP localhost&#xa;port 61125" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="560" y="90" width="150" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="server" value="tftp-server&#xa;request loop" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="800" y="90" width="160" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="serverFiles" value="server-files/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="800" y="210" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="common" value="TftpCommon.cpp&#xa;sendData, sendError, transfer loops, timeout/retry" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="330" y="250" width="390" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="readTitle" value="Read request: client downloads from server" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="80" y="390" width="300" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="readSeq" value="1. Client sends RRQ(filename, octet)&#xa;2. Server sends DATA block 1&#xa;3. Client sends ACK block 1&#xa;4. DATA / ACK repeats&#xa;5. Final DATA payload is &lt; 512 bytes" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=12;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="80" y="430" width="430" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="writeTitle" value="Write request: client uploads to server" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="590" y="390" width="300" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="writeSeq" value="1. Client sends WRQ(filename, octet)&#xa;2. Server sends ACK block 0&#xa;3. Client sends DATA block 1&#xa;4. Server sends ACK block 1&#xa;5. DATA / ACK repeats until final short block" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=12;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="590" y="430" width="430" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="clientFiles" target="client">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="client" target="udp">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="udp" target="server">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" style="endArrow=block;html=1;rounded=0;" edge="1" parent="1" source="server" target="serverFiles">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" style="endArrow=block;html=1;rounded=0;dashed=1;" edge="1" parent="1" source="client" target="common">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" style="endArrow=block;html=1;rounded=0;dashed=1;" edge="1" parent="1" source="server" target="common">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
