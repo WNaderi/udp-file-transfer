@@ -38,10 +38,10 @@ flowchart TB
     end
 
     subgraph SharedLogic["Shared transfer logic"]
-        direction TB
+        direction LR
         Common[["<b>TftpCommon.cpp</b><br/>packet construction<br/>ACK/DATA loop<br/>timeout + retry handling"]]
         subgraph ProtocolDefs["Protocol definitions"]
-            direction LR
+            direction TB
             Opcodes["TftpOpcode.h<br/>RRQ WRQ DATA ACK ERROR"]
             Constants["TftpConstant.h<br/>516-byte packets<br/>512-byte payloads"]
         end
@@ -50,10 +50,10 @@ flowchart TB
     ClientFiles <-->|file I/O| Client
     Server <-->|file I/O| ServerFiles
     Client ==>|"TFTP messages over UDP<br/>RRQ / WRQ / DATA / ACK / ERROR"| Server
-    Client -.->|&lt;&lt;uses&gt;&gt;<br/>shared transfer code| Common
-    Server -.->|&lt;&lt;uses&gt;&gt;<br/>shared transfer code| Common
-    Common -.->|&lt;&lt;includes&gt;&gt;<br/>opcode definitions| Opcodes
-    Common -.->|&lt;&lt;includes&gt;&gt;<br/>packet constants| Constants
+    Client -.-> Common
+    Server -.-> Common
+    Common -.->|&lt;&lt;includes&gt;&gt;| Opcodes
+    Common -.->|&lt;&lt;includes&gt;&gt;| Constants
 
     classDef storage fill:#dae8fc,stroke:#3b6ea8,stroke-width:2px,color:#17365d;
     classDef executable fill:#d5e8d4,stroke:#4f8a45,stroke-width:2px,color:#1f3d1d;
