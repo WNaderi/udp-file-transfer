@@ -47,8 +47,8 @@ flowchart TB
     ClientFiles <-->|file I/O| Client
     Server <-->|file I/O| ServerFiles
     Client ==>|"TFTP messages over UDP<br/>RRQ / WRQ / DATA / ACK / ERROR"| Server
-    Client -.->|&lt;&lt;uses&gt;&gt;<br/>shared transfer code| Common
-    Server -.->|&lt;&lt;uses&gt;&gt;<br/>shared transfer code| Common
+    Client -.-> Common
+    Server -.-> Common
     Common -.->|&lt;&lt;includes&gt;&gt;<br/>opcode definitions| Opcodes
     Common -.->|&lt;&lt;includes&gt;&gt;<br/>packet constants| Constants
 
@@ -64,10 +64,11 @@ flowchart TB
 
     style TopRow fill:transparent,stroke:transparent;
     linkStyle 2 stroke:#c55a11,stroke-width:4px;
-    linkStyle 3,4,5,6 stroke:#6c8ebf,stroke-width:2px;
+    linkStyle 3,4 stroke:#4f81bd,stroke-width:3px;
+    linkStyle 5,6 stroke:#6c8ebf,stroke-width:2px;
 ```
 
-The diagram separates file storage, executable processes, shared transfer logic, and protocol constants. The thick orange connection is the network boundary: the client sends TFTP-style `RRQ`, `WRQ`, `DATA`, `ACK`, and `ERROR` packets to the server over UDP at `127.0.0.1:61125`. Dashed blue arrows show UML-style dependencies on shared implementation and protocol definitions.
+The diagram separates file storage, executable processes, shared transfer logic, and protocol constants. The thick orange connection is the network boundary: the client sends TFTP-style `RRQ`, `WRQ`, `DATA`, `ACK`, and `ERROR` packets to the server over UDP at `127.0.0.1:61125`. Dashed blue arrows from the client and server into `TftpCommon.cpp` represent UML-style `<<uses>>` dependencies on shared transfer code.
 
 For editable diagram source, see [docs/diagrams/tftp-transfer.drawio](docs/diagrams/tftp-transfer.drawio).
 
