@@ -1,0 +1,1 @@
+/usr/bin/c++ "CMakeFiles/tftp-server.dir/TftpServer.cpp.o" "CMakeFiles/tftp-server.dir/TftpCommon.cpp.o" -o tftp-server

@@ -1,0 +1,5 @@
+/home/arian/cs432/proj-3/cmake/CMakeFiles/tftp-client.dir
+/home/arian/cs432/proj-3/cmake/CMakeFiles/tftp-server.dir
+/home/arian/cs432/proj-3/cmake/CMakeFiles/test.dir
+/home/arian/cs432/proj-3/cmake/CMakeFiles/edit_cache.dir
+/home/arian/cs432/proj-3/cmake/CMakeFiles/rebuild_cache.dir

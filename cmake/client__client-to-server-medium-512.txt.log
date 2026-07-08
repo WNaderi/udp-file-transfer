@@ -1,0 +1,134 @@
+client-files/client-to-server-medium-512.txt
+The file is open and ready for I/O operations.
+Sending Client REQ
+Got reply...
+Recieved ACK: 0
+Init packet sent.
+wwa1
+Beginning file transfer
+Processing a: WRQ
+Pointer: 0
+512
+The Project Gutenberg eBook of The Magic Pudding
+
+This ebook is for the use of anyone anywhere in the United States and
+most other parts of the world at no cost and with almost no restrictions
+whatsoever. You may copy it, give it away or re-use it under the terms
+of the Project Gutenberg License included with this ebook or online
+at www.gutenberg.org. If you are not located in the United States,
+you will have to check the laws of the country where you are located
+before using this eBook.
+
+Title: The Magic P
+Sending Block: 1
+Got reply...
+received ACK for block#: 1
+Pointer: 512
+512
+udding
+
+
+Author: Norman Lindsay
+
+Release date: November 26, 2007 [eBook #23625]
+
+Language: English
+
+Credits: Produced by Suzanne Shell, Janet Blenkinship and the Online
+        Distributed Proofreading Team at http://www.pgdp.net
+
+
+*** START OF THE PROJECT GUTENBERG EBOOK THE MAGIC PUDDING ***
+
+
+
+Produced by Suzanne Shell, Janet Blenkinship and the Online
+Distributed Proofreading Team at http://www.pgdp.net
+
+
+
+
+
+
+
+
+
+
+
+  _The_
+  MAGIC PUDDING
+
+  _Written and Illustrated by_
+  NORMAN LINDSAY
+
+
+  [Illustration
+Sending Block: 2
+Got reply...
+received ACK for block#: 2
+Pointer: 1024
+512
+]
+
+
+  DOVER PUBLICATIONS, INC.
+  Mineola, New York
+
+_Bibliographical Note_
+
+This Dover edition, first published in 2006, is an unabridged
+republication of the work published by Angus and Robertson, Ltd.,
+Sydney, Australia, in 1918.
+
+_International Standard Book Number: 0-486-45281-6_
+
+  Manufactured in the United States of America
+  Dover Publications, Inc., 31 East 2nd Street, Mineola, N.Y. 11501
+
+
+       *       *       *       *       *
+
+
+First Slice
+
+
+[Illustration]
+
+This is a frontways view of Bunyip B
+Sending Block: 3
+Got reply...
+received ACK for block#: 3
+Pointer: 1536
+0
+]
+
+
+  DOVER PUBLICATIONS, INC.
+  Mineola, New York
+
+_Bibliographical Note_
+
+This Dover edition, first published in 2006, is an unabridged
+republication of the work published by Angus and Robertson, Ltd.,
+Sydney, Australia, in 1918.
+
+_International Standard Book Number: 0-486-45281-6_
+
+  Manufactured in the United States of America
+  Dover Publications, Inc., 31 East 2nd Street, Mineola, N.Y. 11501
+
+
+       *       *       *       *       *
+
+
+First Slice
+
+
+[Illustration]
+
+This is a frontways view of Bunyip B
+Sending Block: 4
+Got reply...
+received ACK for block#: 4
+File transfer complete!
+Write Process Complete!

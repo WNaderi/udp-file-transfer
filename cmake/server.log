@@ -1,0 +1,181 @@
+Starting Server!
+Recieved a init. packet
+client-to-server-medium.txt
+server-files/client-to-server-medium.txt
+The file is open and ready for I/O operations.
+Got reply...
+wwa1
+Init. packet sent.
+Beginning file transfer
+Processing a: RRQ
+Sending ACK Pack for block: 1
+Got reply...
+whereweare: 2
+Data OPCODE: 3 blockNum: 2
+Sending ACK Pack for block: 2
+Got reply...
+whereweare: 3
+Data OPCODE: 3 blockNum: 3
+File transfer complete!
+Read Process Complete!
+Recieved a init. packet
+client-to-server-medium-512.txt
+server-files/client-to-server-medium-512.txt
+The file is open and ready for I/O operations.
+Got reply...
+wwa1
+Init. packet sent.
+Beginning file transfer
+Processing a: RRQ
+Sending ACK Pack for block: 1
+Got reply...
+whereweare: 2
+Data OPCODE: 3 blockNum: 2
+Sending ACK Pack for block: 2
+Got reply...
+whereweare: 3
+Data OPCODE: 3 blockNum: 3
+Sending ACK Pack for block: 3
+Got reply...
+whereweare: 4
+Data OPCODE: 3 blockNum: 4
+File transfer complete!
+Read Process Complete!
+Recieved a init. packet
+client-to-server-large.txt
+server-files/client-to-server-large.txt
+The file is open and ready for I/O operations.
+Got reply...
+wwa1
+Init. packet sent.
+Beginning file transfer
+Processing a: RRQ
+Sending ACK Pack for block: 1
+Got reply...
+whereweare: 2
+Data OPCODE: 3 blockNum: 2
+Sending ACK Pack for block: 2
+Got reply...
+whereweare: 3
+Data OPCODE: 3 blockNum: 3
+Sending ACK Pack for block: 3
+Got reply...
+whereweare: 4
+Data OPCODE: 3 blockNum: 4
+Sending ACK Pack for block: 4
+Got reply...
+whereweare: 5
+Data OPCODE: 3 blockNum: 5
+Sending ACK Pack for block: 5
+Got reply...
+whereweare: 6
+Data OPCODE: 3 blockNum: 6
+Sending ACK Pack for block: 6
+Got reply...
+whereweare: 7
+Data OPCODE: 3 blockNum: 7
+Sending ACK Pack for block: 7
+Got reply...
+whereweare: 8
+Data OPCODE: 3 blockNum: 8
+Sending ACK Pack for block: 8
+Got reply...
+whereweare: 9
+Data OPCODE: 3 blockNum: 9
+Sending ACK Pack for block: 9
+Got reply...
+whereweare: 10
+Data OPCODE: 3 blockNum: 10
+Sending ACK Pack for block: 10
+Got reply...
+whereweare: 11
+Data OPCODE: 3 blockNum: 11
+Sending ACK Pack for block: 11
+Got reply...
+whereweare: 12
+Data OPCODE: 3 blockNum: 12
+Sending ACK Pack for block: 12
+Got reply...
+whereweare: 13
+Data OPCODE: 3 blockNum: 13
+Sending ACK Pack for block: 13
+Got reply...
+whereweare: 14
+Data OPCODE: 3 blockNum: 14
+Sending ACK Pack for block: 14
+Got reply...
+whereweare: 15
+Data OPCODE: 3 blockNum: 15
+File transfer complete!
+Read Process Complete!
+Recieved a init. packet
+client-to-server-large-512.txt
+server-files/client-to-server-large-512.txt
+The file is open and ready for I/O operations.
+Got reply...
+wwa1
+Init. packet sent.
+Beginning file transfer
+Processing a: RRQ
+Sending ACK Pack for block: 1
+Got reply...
+whereweare: 2
+Data OPCODE: 3 blockNum: 2
+Sending ACK Pack for block: 2
+Got reply...
+whereweare: 3
+Data OPCODE: 3 blockNum: 3
+Sending ACK Pack for block: 3
+Got reply...
+whereweare: 4
+Data OPCODE: 3 blockNum: 4
+Sending ACK Pack for block: 4
+Got reply...
+whereweare: 5
+Data OPCODE: 3 blockNum: 5
+Sending ACK Pack for block: 5
+Got reply...
+whereweare: 6
+Data OPCODE: 3 blockNum: 6
+Sending ACK Pack for block: 6
+Got reply...
+whereweare: 7
+Data OPCODE: 3 blockNum: 7
+Sending ACK Pack for block: 7
+Got reply...
+whereweare: 8
+Data OPCODE: 3 blockNum: 8
+Sending ACK Pack for block: 8
+Got reply...
+whereweare: 9
+Data OPCODE: 3 blockNum: 9
+Sending ACK Pack for block: 9
+Got reply...
+whereweare: 10
+Data OPCODE: 3 blockNum: 10
+Sending ACK Pack for block: 10
+Got reply...
+whereweare: 11
+Data OPCODE: 3 blockNum: 11
+Sending ACK Pack for block: 11
+Got reply...
+whereweare: 12
+Data OPCODE: 3 blockNum: 12
+Sending ACK Pack for block: 12
+Got reply...
+whereweare: 13
+Data OPCODE: 3 blockNum: 13
+Sending ACK Pack for block: 13
+Got reply...
+whereweare: 14
+Data OPCODE: 3 blockNum: 14
+Sending ACK Pack for block: 14
+Got reply...
+whereweare: 15
+Data OPCODE: 3 blockNum: 15
+Sending ACK Pack for block: 15
+Got reply...
+whereweare: 16
+Data OPCODE: 3 blockNum: 16
+File transfer complete!
+Read Process Complete!
