@@ -21,18 +21,53 @@ This repository was built for CSS 432 networking coursework, but the code is org
 ## Architecture
 
 ```mermaid
-flowchart LR
-    ClientFiles["client-files/"] <--> Client["tftp-client"]
-    Client <--> UDP["UDP localhost:61125"]
-    UDP <--> Server["tftp-server"]
-    Server <--> ServerFiles["server-files/"]
+flowchart TB
+    subgraph TopRow[" "]
+        direction LR
+        subgraph ClientSide["Client side"]
+            direction LR
+            ClientFiles[("client-files/<br/>local upload/download folder")]
+            Client["<b>tftp-client</b><br/>builds RRQ/WRQ packets<br/>reads/writes local files"]
+        end
 
-    Common["TftpCommon.cpp\npacket helpers, transfer loop,\ntimeout/retry handling"]
-    Client --> Common
-    Server --> Common
+        subgraph ServerSide["Server side"]
+            direction LR
+            Server["<b>tftp-server</b><br/>validates requests<br/>serves or stores files"]
+            ServerFiles[("server-files/<br/>server file root")]
+        end
+    end
+
+    subgraph SharedLogic["Shared transfer logic"]
+        direction LR
+        Opcodes["TftpOpcode.h<br/>RRQ WRQ DATA ACK ERROR"]
+        Common[["<b>TftpCommon.cpp</b><br/>packet construction<br/>ACK/DATA loop<br/>timeout + retry handling"]]
+        Constants["TftpConstant.h<br/>516-byte packets<br/>512-byte payloads"]
+    end
+
+    ClientFiles <-->|file I/O| Client
+    Server <-->|file I/O| ServerFiles
+    Client ==>|"TFTP messages over UDP<br/>RRQ / WRQ / DATA / ACK / ERROR"| Server
+    Client -.->|&lt;&lt;uses&gt;&gt;<br/>shared transfer code| Common
+    Server -.->|&lt;&lt;uses&gt;&gt;<br/>shared transfer code| Common
+    Common -.->|&lt;&lt;includes&gt;&gt;<br/>opcode definitions| Opcodes
+    Common -.->|&lt;&lt;includes&gt;&gt;<br/>packet constants| Constants
+
+    classDef storage fill:#dae8fc,stroke:#3b6ea8,stroke-width:2px,color:#17365d;
+    classDef executable fill:#d5e8d4,stroke:#4f8a45,stroke-width:2px,color:#1f3d1d;
+    classDef shared fill:#f8cecc,stroke:#b85450,stroke-width:2px,color:#5a1f1f;
+    classDef config fill:#fff2cc,stroke:#b8860b,stroke-width:2px,color:#4d3600;
+
+    class ClientFiles,ServerFiles storage;
+    class Client,Server executable;
+    class Common shared;
+    class Opcodes,Constants config;
+
+    style TopRow fill:transparent,stroke:transparent;
+    linkStyle 2 stroke:#c55a11,stroke-width:4px;
+    linkStyle 3,4,5,6 stroke:#6c8ebf,stroke-width:2px;
 ```
 
-The client always talks to `127.0.0.1:61125`. The server binds to UDP port `61125` and handles one request at a time in a listening loop.
+The diagram separates file storage, executable processes, shared transfer logic, and protocol constants. The thick orange connection is the network boundary: the client sends TFTP-style `RRQ`, `WRQ`, `DATA`, `ACK`, and `ERROR` packets to the server over UDP at `127.0.0.1:61125`. Dashed blue arrows show UML-style dependencies on shared implementation and protocol definitions.
 
 For editable diagram source, see [docs/diagrams/tftp-transfer.drawio](docs/diagrams/tftp-transfer.drawio).
 
