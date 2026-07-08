@@ -39,21 +39,18 @@ flowchart TB
 
     subgraph SharedLogic["Shared transfer logic"]
         direction LR
+        Opcodes["TftpOpcode.h<br/>RRQ WRQ DATA ACK ERROR"]
         Common[["<b>TftpCommon.cpp</b><br/>packet construction<br/>ACK/DATA loop<br/>timeout + retry handling"]]
-        subgraph ProtocolDefs["Protocol definitions"]
-            direction TB
-            Opcodes["TftpOpcode.h<br/>RRQ WRQ DATA ACK ERROR"]
-            Constants["TftpConstant.h<br/>516-byte packets<br/>512-byte payloads"]
-        end
+        Constants["TftpConstant.h<br/>516-byte packets<br/>512-byte payloads"]
     end
 
     ClientFiles <-->|file I/O| Client
     Server <-->|file I/O| ServerFiles
     Client ==>|"TFTP messages over UDP<br/>RRQ / WRQ / DATA / ACK / ERROR"| Server
-    Client -.-> Common
-    Server -.-> Common
-    Common -.->|&lt;&lt;includes&gt;&gt;| Opcodes
-    Common -.->|&lt;&lt;includes&gt;&gt;| Constants
+    Client -.->|&lt;&lt;uses&gt;&gt;<br/>shared transfer code| Common
+    Server -.->|&lt;&lt;uses&gt;&gt;<br/>shared transfer code| Common
+    Common -.->|&lt;&lt;includes&gt;&gt;<br/>opcode definitions| Opcodes
+    Common -.->|&lt;&lt;includes&gt;&gt;<br/>packet constants| Constants
 
     classDef storage fill:#dae8fc,stroke:#3b6ea8,stroke-width:2px,color:#17365d;
     classDef executable fill:#d5e8d4,stroke:#4f8a45,stroke-width:2px,color:#1f3d1d;
@@ -66,10 +63,8 @@ flowchart TB
     class Opcodes,Constants config;
 
     style TopRow fill:transparent,stroke:transparent;
-    style ProtocolDefs fill:transparent,stroke:transparent;
     linkStyle 2 stroke:#c55a11,stroke-width:4px;
-    linkStyle 3,4 stroke:#4f81bd,stroke-width:3px;
-    linkStyle 5,6 stroke:#6c8ebf,stroke-width:2px;
+    linkStyle 3,4,5,6 stroke:#6c8ebf,stroke-width:2px;
 ```
 
 The diagram separates file storage, executable processes, shared transfer logic, and protocol constants. The thick orange connection is the network boundary: the client sends TFTP-style `RRQ`, `WRQ`, `DATA`, `ACK`, and `ERROR` packets to the server over UDP at `127.0.0.1:61125`. Dashed blue arrows show UML-style dependencies on shared implementation and protocol definitions.
