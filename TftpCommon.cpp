@@ -53,17 +53,7 @@ static int registerTimeoutHandler( ){
  * std::this_thread::sleep_for(std::chrono::milliseconds(200)); // slow down transmission
  */
 
-/*
- * TODO: Add common code that is shared between your server and your client here. For example: helper functions for
- * sending bytes, receiving bytes, parse opcode from a tftp packet, parse data block/ack number from a tftp packet,
- * create a data block/ack packet, and the common "process the file transfer" logic.
- */
-
-
-
-// __N = size of packet
-// replyBuffer will hold response packet
-// Returns: bytes actually recieved in response
+// Build and send a TFTP ERROR packet with the provided error code and message.
 inline void sendError(int& sockfd, struct sockaddr_storage* to, int errorNum, char* error, size_t __N) {
 
     char errorBuff[MAX_PACKET_LEN];
@@ -142,8 +132,7 @@ inline ssize_t sendData(int& sockfd, char* bpt, const int& __N, struct sockaddr_
 */
 inline int processWriting(std::fstream& file, int& sockfd, struct sockaddr_storage* to, int& whereweare) { //Writing (sending data to another machine)
 
-    //TODO: Process initial packet
-
+    // Read the file in 512-byte chunks and wrap each chunk in a DATA packet.
     char buffer[MAX_DATA_SIZE];
 
     bool writedone = false;
@@ -172,8 +161,7 @@ inline int processWriting(std::fstream& file, int& sockfd, struct sockaddr_stora
 
         std::cout << bytes_read << std::endl;
 
-        //TODO: Create DATA Packet
-
+        // DATA packets contain opcode, block number, then up to 512 bytes of payload.
         unsigned short* opCode = (unsigned short *) packBuffer;
 
         *opCode = htons(3);
@@ -188,8 +176,7 @@ inline int processWriting(std::fstream& file, int& sockfd, struct sockaddr_stora
 
         std::cout << data << std::endl;
 
-        //TODO: Send DATA Packet
-
+        // Send the block and wait for a matching ACK before advancing the block number.
         char ackBuffer[MAX_PACKET_LEN];
 
         std::cout << "Sending Block: " << ntohs(*blockNum) << std::endl;
@@ -200,9 +187,6 @@ inline int processWriting(std::fstream& file, int& sockfd, struct sockaddr_stora
 
         }
 
-        //#################################
-        //#### TODO: PROCESS ACK HERE #####
-        //#################################
         bool replyRecieved = false;
 
         unsigned short * ackOpCode = (unsigned short *) ackBuffer;

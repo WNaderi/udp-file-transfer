@@ -206,20 +206,14 @@ void handleIncomingRequest(int sockfd) {
 
     int reqtype;
 
-    /*
-     * TODO: define necessary variables needed for handling incoming requests.
-     */
-
+    // Reused for each request; closed after a transfer or after an error path.
     std::fstream file;
 
     for (;;) {
 
-        /*
-         * TODO: Receive the 1st request packet from the client
-         */
-
         try {
         
+            // Wait for the client's initial RRQ or WRQ packet.
             char buffer[MAX_PACKET_LEN];
 
             socklen_t clilen = sizeof(struct sockaddr);
@@ -231,14 +225,10 @@ void handleIncomingRequest(int sockfd) {
             if (packetLength < 0) {// expecting rrq or wrq
 
                 throw std::runtime_error("Error recieving initial req packet");
-                
+
             }
 
-            /*
-            * TODO: Parse the request packet. Based on whether it is RRQ/WRQ, open file for read/write.
-            * Create the 1st response packet, send it to the client.
-            */
-
+            // Decode the request opcode and filename, then map it into server-files/.
             char* bpt = buffer;
 
             unsigned short * opCode = (unsigned short *) bpt;
@@ -251,6 +241,7 @@ void handleIncomingRequest(int sockfd) {
 
             int whereweare;
 
+            // For RRQ the server reads from disk and sends DATA blocks to the client.
             if (ntohs(*opCode) == 1) { //RRQ (We are uploading)
 
                 if (!std::filesystem::exists(filePath)) { //File does not exist... send Error
@@ -269,6 +260,7 @@ void handleIncomingRequest(int sockfd) {
                 whereweare = 1;
 
 
+            // For WRQ the server creates a new file and receives DATA blocks from the client.
             } else if (ntohs(*opCode) == 2) { // WRQ (We are downloading)
 
                 if (std::filesystem::exists(filePath)) { //File already exists... Send Error
@@ -321,9 +313,7 @@ void handleIncomingRequest(int sockfd) {
 
                 std::cout << "Init. packet sent." << std::endl;
 
-                /*
-                * TODO: process the file transfer
-                */
+                // Continue the DATA/ACK exchange after the initial request response.
                 std::cout << "Beginning file transfer" << std::endl;
 
                 processFileTransfer(reqtype, sockfd, (sockaddr_storage*)&cli_addr, file, whereweare);
@@ -332,11 +322,7 @@ void handleIncomingRequest(int sockfd) {
 
             
 
-            /*
-            * TODO: Don't forget to close any file that was opened for read/write, close the socket, free any
-            * dynamically allocated memory, and necessary clean up.
-            */
-
+            // Close the transfer file before returning to the listen loop.
             file.close();
 
         }
@@ -365,10 +351,7 @@ int main(int argc, char *argv[]) {
 
     memset(&serv_addr, 0, sizeof(serv_addr));
 
-    /*
-     * TODO: initialize the server address, create socket and bind the socket as you did in programming assignment 1
-     */
-
+    // Bind the server UDP socket to the well-known TFTP port used by the client.
     sockfd = socket(PF_INET, SOCK_DGRAM, 0);
     if (sockfd < 0)
         std::cerr << "Error Making Socket" << std::endl;

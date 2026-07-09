@@ -1,6 +1,4 @@
-/*
- * TODO: Add constant variables in this file
- */
+// Packet sizes, retry limits, and runtime folders shared by the client and server.
 static const unsigned int MAX_PACKET_LEN = 516; // data 512 + opcode 2 + block num 2
 static const int MAX_RETRY_COUNT = 10;
 static const char * SERVER_FOLDER = "server-files/"; // DO NOT CHANGE

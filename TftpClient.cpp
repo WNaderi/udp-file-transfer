@@ -167,11 +167,7 @@ int main(int argc, char *argv[]) {
     memset(&serv_addr, 0, sizeof(serv_addr));
     memset(&cli_addr, 0, sizeof(cli_addr));
 
-    /*
-     * TODO: initialize server and client address, create socket and bind socket as you did in
-     * programming assignment 1
-     */
-
+    // Configure the server endpoint and bind the client to an ephemeral UDP port.
     serv_addr.sin_addr.s_addr = inet_addr(SERV_HOST_ADDR);
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(SERV_UDP_PORT);
@@ -197,13 +193,10 @@ int main(int argc, char *argv[]) {
 
     }
 
-    /*
-     * TODO: Verify arguments, parse arguments to see if it is a read request (r) or write request (w),
-     * parse the filename to transfer, open the file for read or write
-     */
-
     std::fstream file;
 
+    // The client expects a transfer mode and filename, then opens the local file
+    // from client-files/ using the direction implied by the request.
     if (argc <= 1) {
 
         throw std::runtime_error("Missing args.");
@@ -248,11 +241,7 @@ int main(int argc, char *argv[]) {
 
     }
 
-    /*
-     * TODO: create the 1st tftp request packet (RRQ or WRQ) and send it to the server via socket.
-     * Remember to use htons when filling the opcode in the tftp request packet.
-     */
-
+    // Send the RRQ or WRQ and process the first DATA or ACK packet returned by the server.
     int state = sendrequest(reqtype, filename, "octet", sockfd, (sockaddr_storage*)&serv_addr, whereweare, file);
     std::cout << "wwa" << whereweare << std::endl;
     if (state == 1) {
@@ -265,19 +254,13 @@ int main(int argc, char *argv[]) {
 
     } else {
 
-    /*
-     * TODO: process the file transfer
-     */
-    std::cout << "Beginning file transfer" << std::endl;
-    processFileTransfer(reqtype, sockfd, (sockaddr_storage*)&serv_addr, file, whereweare);
+        // Continue transferring remaining DATA/ACK packets after the initial exchange.
+        std::cout << "Beginning file transfer" << std::endl;
+        processFileTransfer(reqtype, sockfd, (sockaddr_storage*)&serv_addr, file, whereweare);
 
     }
 
-    /*
-     * TODO: Don't forget to close any file that was opened for read/write, close the socket, free any
-     * dynamically allocated memory, and necessary clean up.
-     */
-
+    // Release the file handle and UDP socket before exiting.
     file.close();
     close(sockfd);
 
