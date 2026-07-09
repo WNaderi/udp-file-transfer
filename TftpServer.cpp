@@ -35,20 +35,11 @@ int createInitPack(int& reqtype, std::fstream& file, int& whereweare, int& sockf
 
         char* data = bpt + 4;
 
-        char dataBuff[MAX_DATA_SIZE];
-
         file.read(data, MAX_DATA_SIZE);
-        std::cout << "Pointer: " << file.tellg() << std::endl;
-        //memcpy(data, dataBuff, file.gcount());
 
         char ackBuffer[MAX_PACKET_LEN];
 
-        std::cout << data << std::endl;
-
-        std::cout << "Sent init data" << std::endl;
-        printBuffer(bpt, 4+file.gcount());
         sendData(sockfd, bpt, 4+file.gcount(), to, ackBuffer);
-        std::cout << "Init data sent." << std::endl;
         //Should get ACK 0, need to process and check
         if (file.gcount() < MAX_DATA_SIZE) { //this the only packet we need to send!
             bool ackRecieved = false;
@@ -87,7 +78,6 @@ int createInitPack(int& reqtype, std::fstream& file, int& whereweare, int& sockf
 
             if (ntohs(*ackOpCode) == 4) {
                 
-                std::cout << "Expected: " << whereweare << " Recieved: " << ntohs(*ackBlockNum) << std::endl;
                 if (ntohs(*ackBlockNum) == whereweare) {
 
                     whereweare++;
@@ -220,8 +210,6 @@ void handleIncomingRequest(int sockfd) {
 
             ssize_t packetLength = recvfrom(sockfd, buffer, MAX_PACKET_LEN, 0, (struct sockaddr *)&cli_addr, &clilen);
 
-            std::cout << "Recieved a init. packet" << std::endl;
-
             if (packetLength < 0) {// expecting rrq or wrq
 
                 throw std::runtime_error("Error recieving initial req packet");
@@ -288,18 +276,11 @@ void handleIncomingRequest(int sockfd) {
 
             }
 
-            std::cout << filePath << std::endl;
-
-            if (file.is_open() && file.good()) {
-                std::cout << "The file is open and ready for I/O operations." << std::endl;
-            } else {
-
+            if (!file.is_open() || !file.good()) {
                 throw std::runtime_error("File is not open or good");
-
             }
 
             int state = createInitPack(reqtype, file, whereweare, sockfd, (sockaddr_storage*)&cli_addr);
-            std::cout << "wwa" << whereweare << std::endl;
 
             if (state == -1) {
 

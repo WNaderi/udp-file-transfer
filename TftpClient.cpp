@@ -82,8 +82,6 @@ int sendrequest(int& reqtype, char* name, char* mode, int& sockfd, struct sockad
                         file.write(replyBuff+4, recvBytes-4);
 
                         if (recvBytes < MAX_PACKET_LEN) {
-                            std::cout << recvBytes << std::endl;
-
                             char finACK[MAX_PACKET_LEN];
                             
                             unsigned short* finOpCode = (unsigned short*) finACK;
@@ -231,19 +229,12 @@ int main(int argc, char *argv[]) {
 
     }
 
-    std::cout << filePath << std::endl;
-
-    if (file.is_open() && file.good()) {
-            std::cout << "The file is open and ready for I/O operations." << std::endl;
-    } else {
-
+    if (!file.is_open() || !file.good()) {
         throw std::runtime_error("File is not open or good");
-
     }
 
     // Send the RRQ or WRQ and process the first DATA or ACK packet returned by the server.
     int state = sendrequest(reqtype, filename, "octet", sockfd, (sockaddr_storage*)&serv_addr, whereweare, file);
-    std::cout << "wwa" << whereweare << std::endl;
     if (state == 1) {
 
         std::cout << "Transfer complete!" << std::endl;

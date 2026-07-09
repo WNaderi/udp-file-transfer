@@ -19,18 +19,9 @@
 // To track how retransmit/retry has occurred.
 static int retryCount = 0;
 
-// Helper function to print the first len bytes of the buffer in Hex
-static void printBuffer(const char * buffer, unsigned int len) {
-    for(int i = 0; i < len; i++) {
-        printf("%x,", buffer[i]);
-    }
-    printf("\n");
-}
-
 // increment retry count when timeout occurs. 
 static void handleTimeout(int signum ){
     retryCount++;
-    printf("timeout occurred! count %d\n", retryCount);
 }
 
 static int registerTimeoutHandler( ){
@@ -108,8 +99,6 @@ inline ssize_t sendData(int& sockfd, char* bpt, const int& __N, struct sockaddr_
             } else {
                 std::cerr << "Error receiving reply" << std::endl;
             }
-        } else {
-            std::cout << "Got reply..." << std::endl;
         }
 
         return recvResult;
@@ -154,12 +143,9 @@ inline int processWriting(std::fstream& file, int& sockfd, struct sockaddr_stora
             break;
 
         }
-        std::cout << "Pointer: " << file.tellg() << std::endl;
         file.read(buffer, MAX_DATA_SIZE);
         
         int bytes_read = file.gcount(); // How many bytes were actually readasd
-
-        std::cout << bytes_read << std::endl;
 
         // DATA packets contain opcode, block number, then up to 512 bytes of payload.
         unsigned short* opCode = (unsigned short *) packBuffer;
@@ -174,12 +160,9 @@ inline int processWriting(std::fstream& file, int& sockfd, struct sockaddr_stora
 
         memcpy(data, buffer, bytes_read);
 
-        std::cout << data << std::endl;
-
         // Send the block and wait for a matching ACK before advancing the block number.
         char ackBuffer[MAX_PACKET_LEN];
 
-        std::cout << "Sending Block: " << ntohs(*blockNum) << std::endl;
         if (sendData(sockfd, packBuffer, bytes_read+4, to, ackBuffer) < 0) {
 
             std::cerr << "Error sending Data" << std::endl;
@@ -198,7 +181,6 @@ inline int processWriting(std::fstream& file, int& sockfd, struct sockaddr_stora
                 unsigned short* blockNumber = (unsigned short*)(ackBuffer + 2);
                 if (ntohs(*blockNumber) == whereweare) {
                     replyRecieved = true;
-                    std::cout << "received ACK for block#: " << whereweare << std::endl;
                     whereweare++; // Prepare for the next block
 
                 } else {
@@ -255,10 +237,8 @@ inline int processReading(int& sockfd, std::fstream& file, struct sockaddr_stora
         *blockNum = htons(whereweare);
 
         ssize_t ackSize = 4;
-        std::cout << "Sending ACK Pack for block: " << ntohs(*blockNum) << std::endl;
         ssize_t packetLen = sendData(sockfd, apt, ackSize, from, dataBuffer);
         whereweare++; //send x ack, recieved next data in sendData so now we expecting to recieve x+1 ack.
-        std::cout << "whereweare: " << whereweare << std::endl;
         if (packetLen < 0) {
 
             std::cerr << "Error sending Data" << std::endl;
@@ -273,7 +253,6 @@ inline int processReading(int& sockfd, std::fstream& file, struct sockaddr_stora
 
             unsigned short* blockNumber = (unsigned short*)(dataBuffer + 2);
 
-            std::cout << "Data OPCODE: " << ntohs(*dOpCode) << " blockNum: " << ntohs(*blockNumber) << std::endl;
             while (!replyRecieved) {
 
                 if (ntohs(*dOpCode) == 3) {
@@ -344,23 +323,16 @@ inline void processFileTransfer(const int& reqtype, int& sockfd, struct sockaddr
 
     
     // process initial ack/data packet
-
-    std::cout << "Processing a: "; 
     if (reqtype == TFTP_WRQ) {
-        std::cout << "WRQ" << std::endl;
         if (processWriting(file, sockfd, to, whereweare) == -1) {
             std::cerr << "Write process was terminated" << std::endl;
         }
         
-        std::cout << "Write Process Complete!" << std::endl;
 
     } else if (reqtype == TFTP_RRQ) {
-        std::cout << "RRQ" << std::endl;
         if (processReading(sockfd, file, to, whereweare) == -1) {
             std::cerr << "Read process was terminated" << std::endl;
         }
-
-        std::cout << "Read Process Complete!" << std::endl;
 
     }
     
@@ -376,7 +348,6 @@ inline void extractFilenameFromPacket(const char* packet, int packetLength, std:
     if (filenameStart + filenameLength < packet + packetLength) {
         // Copy the filename to a std::string for safe usage
         filename.assign(filenameStart, filenameLength);
-        std::cout << filename << std::endl;
     } else {
         // Handle error: invalid packet or missing null terminator for filename
         std::cerr << "Error: Invalid WRQ/RRQ packet format." << std::endl;
