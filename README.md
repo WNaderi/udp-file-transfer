@@ -24,7 +24,7 @@ This repository was built for CSS 432 networking coursework, but the code is org
 
 The diagram separates file storage, executable processes, shared transfer logic, and protocol constants. The thick orange connection is the network boundary: the client sends TFTP-style `RRQ`, `WRQ`, `DATA`, `ACK`, and `ERROR` packets to the server over UDP at `127.0.0.1:61125`. Dashed blue arrows from the client and server into `TftpCommon.cpp` represent UML-style `<<uses>>` dependencies on shared transfer code.
 
-For editable diagram source, see [docs/diagrams/tftp-transfer.drawio](docs/diagrams/tftp-transfer.drawio). The GitHub-rendered architecture image is stored at [docs/diagrams/architecture.svg](docs/diagrams/architecture.svg).
+The architecture image is stored at [docs/diagrams/architecture.svg](docs/diagrams/architecture.svg).
 
 ## Repository Layout
 
