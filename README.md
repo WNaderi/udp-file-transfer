@@ -1,6 +1,6 @@
 # UDP TFTP File Transfer
 
-A small C++17 implementation of a Trivial File Transfer Protocol style client and server over UDP. The project supports reading files from the server, writing files to the server, fixed-size DATA blocks, ACK-based sequencing, error packets, and timeout-driven retransmission.
+A C++17 implementation of a Trivial File Transfer Protocol style client and server over UDP. The project supports reading files from the server, writing files to the server, fixed-size DATA blocks, ACK-based sequencing, error packets, and timeout-driven retransmission.
 
 This repository was built for CSS 432 networking coursework, but the code is organized as a standalone CMake project with two executables:
 
@@ -9,9 +9,8 @@ This repository was built for CSS 432 networking coursework, but the code is org
 
 ## Features
 
-- UDP socket communication on localhost port `61125`
-- TFTP-style opcodes: `RRQ`, `WRQ`, `DATA`, `ACK`, and `ERROR`
-- Octet/binary transfer mode
+- UDP socket communication on port `61125`
+- Octet/binary file transfer mode
 - 512-byte data payloads with 516-byte maximum packets
 - Sequential block numbers and ACK validation
 - Timeout and retry support using `SIGALRM`
@@ -22,9 +21,14 @@ This repository was built for CSS 432 networking coursework, but the code is org
 
 ![UDP TFTP architecture diagram](docs/diagrams/architecture.svg)
 
-The diagram separates file storage, executable processes, shared transfer logic, and protocol constants. The thick orange connection is the network boundary: the client sends TFTP-style `RRQ`, `WRQ`, `DATA`, `ACK`, and `ERROR` packets to the server over UDP at `127.0.0.1:61125`. Dashed blue arrows from the client and server into `TftpCommon.cpp` represent UML-style `<<uses>>` dependencies on shared transfer code.
+This diagram illustrates a simple file transfer from the server to the client with no unexpected network behavior. This is the client server architecture the project was designed around. The client initiates the transmission by sending the server a `RRQ`. The server responds by sending the first `DATA` block. The client acknowledges it received data by sending an `ACK` back. This repeates until the client receives data payload less than 512 bytes.
 
 The architecture image is stored at [docs/diagrams/architecture.svg](docs/diagrams/architecture.svg).
+
+## Architecture with packet loss
+![UDP TFTP architecture diagram w/ Packet Loss](docs/diagrams/packet_loss.svg)
+
+
 
 ## Repository Layout
 
