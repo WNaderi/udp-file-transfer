@@ -28,7 +28,7 @@ The architecture image is stored at [docs/diagrams/architecture.svg](docs/diagra
 ## Architecture with packet loss
 ![UDP TFTP architecture diagram w/ Packet Loss](docs/diagrams/packet_loss.svg)
 
-
+This diagram illustrates when packet loss occurrs during the file transfer from the server to the client. The state of the transmission begins with the server receiving the client's fourth acknowledgement. The server then sends the next `DATA` Block #5 and begins a timer. The client receives the data packet and sends `ACK` #5. Somewhere in the network, this packet is lost. The server's timesout, assumes a packet was dropped, and retransmits Block #5. The client receives the duplicate Block #5 and does not write the data since it used the block number on the packet to see if its the next packet or not and retransmits `ACK` #5 telling the server it is ready for the next data block. The server finally receives this acknowledgement and begins transmission of Block #6. 
 
 ## Repository Layout
 
