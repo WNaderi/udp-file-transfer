@@ -21,14 +21,18 @@ This repository was built for CSS 432 networking coursework, but the code is org
 
 ![UDP TFTP architecture diagram](docs/diagrams/architecture.svg)
 
-This diagram illustrates a simple file transfer from the server to the client with no unexpected network behavior. This is the client server architecture the project was designed around. The client initiates the transmission by sending the server a `RRQ`. The server responds by sending the first `DATA` block. The client acknowledges it received data by sending an `ACK` back. This repeates until the client receives data payload less than 512 bytes.
+This diagram illustrates the normal TFTP data transfer. The client initiates the transfer by sending a Read Request (RRQ). The server responds with the first DATA block, and the client acknowledges each block with an ACK. This stop-and-wait exchange repeats until the server sends a final DATA block with a payload smaller than 512 bytes, indicating the end of the file.
 
 The architecture image is stored at [docs/diagrams/architecture.svg](docs/diagrams/architecture.svg).
 
 ## Architecture with packet loss
 ![UDP TFTP architecture diagram w/ Packet Loss](docs/diagrams/packet_loss.svg)
 
-This diagram illustrates when packet loss occurrs during the file transfer from the server to the client. The state of the transmission begins with the server receiving the client's fourth acknowledgement. The server then sends the next `DATA` Block #5 and begins a timer. The client receives the data packet and sends `ACK` #5. Somewhere in the network, this packet is lost. The server's timesout, assumes a packet was dropped, and retransmits Block #5. The client receives the duplicate Block #5 and does not write the data since it used the block number on the packet to see if its the next packet or not and retransmits `ACK` #5 telling the server it is ready for the next data block. The server finally receives this acknowledgement and begins transmission of Block #6. 
+This diagram demonstrates how the protocol recovers from a lost ACK packet. After successfully acknowledging block #4, the client receives DATA block #5 and sends ACK #5. The ACK is lost in transit, so the server's retransmission timer expires.
+
+The server retransmits DATA block #5. Because the client has already processed this block, it recognizes the duplicate using the block number, avoids writing the data a second time, and simply resends ACK #5. Once the server receives the acknowledgment, the transfer continues with DATA block #6.
+
+The architecture image is stored at [docs/diagrams/packet_loss.svg](docs/diagrams/packet_loss.svg).
 
 ## Repository Layout
 
