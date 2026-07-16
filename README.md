@@ -1,6 +1,6 @@
 # UDP TFTP File Transfer
 
-A C++17 implementation of a Trivial File Transfer Protocol style client and server over UDP. The project supports reading files from the server, writing files to the server, fixed-size DATA blocks, ACK-based sequencing, error packets, and timeout-driven retransmission.
+A C++ implementation of a Trivial File Transfer Protocol style client and server over UDP. The project supports reading files from the server, writing files to the server, fixed-size DATA blocks, ACK-based sequencing, error packets, and timeout-driven retransmission.
 
 This repository was built for CSS 432 networking coursework, but the code is organized as a standalone CMake project with two executables:
 

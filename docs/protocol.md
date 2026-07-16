@@ -8,24 +8,6 @@ This project implements a compact TFTP-style protocol over UDP. It uses the stan
 - Maximum packet size: `516` bytes
 - Maximum DATA payload: `512` bytes
 
-## Components
-
-```mermaid
-flowchart TB
-    CLI["Client CLI\n./tftp-client r|w filename"]
-    Client["TftpClient.cpp\ncreates RRQ/WRQ and opens local file"]
-    Server["TftpServer.cpp\nlistens, validates request, opens server file"]
-    Common["TftpCommon.cpp\nsendData, sendError,\nprocessReading, processWriting"]
-    Files["client-files/ and server-files/"]
-
-    CLI --> Client
-    Client <--> Common
-    Server <--> Common
-    Client <--> Server
-    Client --> Files
-    Server --> Files
-```
-
 ## Opcodes
 
 | Name | Value | Meaning |
