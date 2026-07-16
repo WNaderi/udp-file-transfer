@@ -115,41 +115,6 @@ cd build
 
 The upload command reads `client-files/client-to-server-small.txt` and writes `server-files/client-to-server-small.txt`.
 
-## Transfer Flows
-
-### Read Request
-
-```mermaid
-sequenceDiagram
-    participant C as tftp-client
-    participant S as tftp-server
-    C->>S: RRQ filename, octet
-    S->>C: DATA block 1
-    C->>S: ACK block 1
-    S->>C: DATA block 2
-    C->>S: ACK block 2
-    S->>C: DATA final block less than 512 bytes
-    C->>S: ACK final block
-```
-
-### Write Request
-
-```mermaid
-sequenceDiagram
-    participant C as tftp-client
-    participant S as tftp-server
-    C->>S: WRQ filename, octet
-    S->>C: ACK block 0
-    C->>S: DATA block 1
-    S->>C: ACK block 1
-    C->>S: DATA block 2
-    S->>C: ACK block 2
-    C->>S: DATA final block less than 512 bytes
-    S->>C: ACK final block
-```
-
-A transfer finishes when the sender transmits a DATA packet with fewer than 512 payload bytes. Empty files are represented by a DATA packet with no payload.
-
 ## Packet Format
 
 The implementation follows the core TFTP packet shapes:
